@@ -1,6 +1,6 @@
 
 # Script 6 ----------------------------------------------------------------
-# Supplemental Figure 13
+# Figure 4
 
 # Cobamide Skin Microbiome Manuscript
 # C. amycolatum LK19 cell extract in E. coli cobamide assay
@@ -45,7 +45,7 @@ p1 <- ggplot(data, aes(x=Concentration, y=log10(OD600), fill=Sample)) + geom_box
 p2 <- ggplot(data, aes(x=Num_Concentration,y=log10(OD600))) + geom_point() +
   geom_smooth(method = "lm") + xlab("Cyanocobalamin concentration (ng/mL)")
 
-# plot - Supplemental Figure 13
+# plot - Figure 4
 plot_grid(p2,p1, align="h",axis = "b")
 
 # get equation for line

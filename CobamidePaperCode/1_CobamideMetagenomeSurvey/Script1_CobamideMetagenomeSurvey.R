@@ -1,6 +1,6 @@
 
 # Script 1 ----------------------------------------------------------------
-# Figures 1-3A, Supplemental Figures 1,3-4
+# Figures 1-3A, Supplemental Figure 2
 
 # Cobamide Skin Microbiome Manuscript
 # Cobamide Metagenome Survey
@@ -250,7 +250,7 @@ unique_taxa$Gene.Ortholog.Group <- factor(unique_taxa$Gene.Ortholog.Group, level
 
 unique_taxa$Protein.Description <- factor(unique_taxa$Protein.Description, levels = c("Single copy genes","Cobamide dependent enzymes"))
 
-## plot unique species per cobamide-dependent gene - Supplemental Figure 4
+## plot unique species per cobamide-dependent gene - Supplemental Figure 2C
 ggplot(unique_taxa, aes(x=Gene.Ortholog.Group, y=unique_taxa, fill=Protein.Description)) + 
   geom_col() + 
   theme_classic()+
@@ -462,7 +462,7 @@ ann_colors = list(family_classification...2. = c("NA"="black", Bifidobacteriacea
 # order of heatmaps
 sites
 
-## plot family-level heatmap - Supplemental Figure 3
+## plot family-level heatmap - Supplemental Figure 2B
 pheatmap(large_matrix, cluster_rows = TRUE, cluster_cols = FALSE, color = my.colors,
          breaks = my.breaks,gaps_col=c(13,26,39), 
          annotation_colors = ann_colors,
@@ -716,7 +716,7 @@ rpoB_plot <- ggplot(rpoB_per_sample, aes(x=microenvironment, y=log10(rpoB_per_sa
   xlab("Microenvironment") + 
   theme(legend.position = "none")
 
-## final plot - read counts per sample - Supplemental Figure 1
+## final plot - read counts per sample - Supplemental Figure 2A
 plot_grid(biosynth_plot, dep_plot, rpoB_plot, nrow=1)
 
 ## Archaea 

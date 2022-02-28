@@ -1,6 +1,6 @@
 
 # Script 3E ----------------------------------------------------------------
-# Figure 4, Supplemental Table 2, and Supplemental Figure 6
+# Figure 5, Supplemental Table 2, and Supplemental Figure 3
 
 # Cobamide Skin Microbiome Manuscript
 # Spiec-Easi - Consensus Network Analysis
@@ -247,7 +247,7 @@ consensusSE <- function(network,microenvironment_for_mean){
 }
 
 
-# Plot the consensus networks with igraph - Figure 4A -------------------------------------------
+# Plot the consensus networks with igraph - Figure 5A -------------------------------------------
 
 sebaceous <- consensusSE(networks$sebaceous,"sebaceous")
 set.seed(99)
@@ -337,7 +337,7 @@ summary_stat <- left_join(Transitivity, Assortativity_phylum)
 summary_stat <- left_join(summary_stat, Assortativity_degree)
 summary_stat <- left_join(summary_stat, Modularity)
 
-# for Supplemental Table 1
+# for Supplemental Table 2
 summary_stat <- summary_stat %>% gather(statistic, value, 2:5)
 
 # count number of edges and nodes for each network and calculate density
@@ -346,7 +346,7 @@ edge_vertex <- list("sebaceous" = data.frame(edges = gsize(sebaceous), vertex=go
                     "dry" = data.frame(edges = gsize(dry), vertex=gorder(dry), density = edge_density(dry), microenvironment="dry"),
                     "foot" = data.frame(edges = gsize(foot), vertex=gorder(foot), density = edge_density(foot), microenvironment="foot"))
 
-# for Supplemental Table 1
+# for Supplemental Table 2
 edge_vertex <- rbindlist(edge_vertex)
 
 # Integration of cobamide biosynthesis and use ----------------------------
@@ -500,7 +500,7 @@ p <- plot_grid(
 )
 
 
-# Figure 4B-E
+# Figure 5B-E
 plot_grid(p, ncol = 1)
 
 # average number of edge categories
@@ -514,7 +514,7 @@ average_dependence <- species_plot %>% group_by(microenvironment,B12_dependence)
 
 # Degree distribution -----------------------------------------------------
 
-# plot degree distribution - Supplemental Figure 6
+# plot degree distribution - Supplemental Figure 3
 dev.off()
 plot(0:(length(degree.distribution(sebaceous))-1), degree.distribution(sebaceous), ylim=c(0,.4), xlim=c(0,11), type='b',
      ylab="Frequency", xlab="Degree", col = "#882255",lwd=2)

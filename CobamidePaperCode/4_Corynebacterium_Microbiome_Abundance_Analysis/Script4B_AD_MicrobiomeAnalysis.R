@@ -1,6 +1,6 @@
 
 # Script 4B  ----------------------------------------------------------------
-# Figure 5B-C, Supplemental Figure 10
+# Figure 6B-C, Supplemental Figure 5
 
 # Cobamide Skin Microbiome Manuscript
 # Atopic dermatitis skin microbiome abundance analysis
@@ -169,7 +169,7 @@ sebaceous_plot <- plot_NMDS("sebaceous",meta = meta, abundance_long = gather, ab
 moist_plot <- plot_NMDS("moist", meta = meta, abundance_long = gather, abundance_table = relativeAbundances, diversity = diversity)
 dry_plot <- plot_NMDS("dry", meta = meta, abundance_long = gather, abundance_table = relativeAbundances, diversity = diversity)
 
-# final plot - Supplemental Figure 10
+# final plot - Supplemental Figure 5
 plot_grid(sebaceous_plot, moist_plot, dry_plot)
 
 
@@ -217,7 +217,7 @@ B12 <- B12 %>% filter(!is.infinite(log10abundance)) # exclude a few samples with
 avg <- B12 %>% group_by(Subject_Num,SkinSite,Timepoint) %>% summarise(mean(log10abundance)) # average log abundance
 avg <- left_join(avg,B12)
 
-# plot cobamide-producing coryne (CPC) abundance by disease state - Figure 5B
+# plot cobamide-producing coryne (CPC) abundance by disease state - Figure 6B
 ggplot(B12, aes(x=Timepoint,y=log10abundance, fill=Group)) + geom_boxplot() + geom_point() +
   theme_classic() + ylab("Log10 Corynebacterium cobamide producer abundance") + 
   scale_fill_manual(values=c("#DEEFB7","#5FB49C"))
@@ -230,7 +230,7 @@ dunnTest(log10abundance ~ Timepoint, data = B12, method="bonferroni")
 
 avg$SkinSite <- factor(avg$SkinSite, levels = c("Pc","Ac","Ic","Ra","Oc","Gb","Fh","Vf"))
 
-# plot cobamide-producing coryne (CPC) abundance by skin site and disease state - Figure 5C
+# plot cobamide-producing coryne (CPC) abundance by skin site and disease state - Figure 6C
 ggplot(avg, aes(x=Timepoint,y=avg$`mean(log10abundance)`, color=Group, group=Subject_ID)) + geom_line(color="black") +
   geom_point(size=2) +   geom_point(shape = 1,size = 2,colour = "black") + 
   facet_wrap(~SkinSite) + theme_classic() +  ylab("Log10 Corynebacterium cobamide producer abundance") + 

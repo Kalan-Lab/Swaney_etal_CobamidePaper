@@ -1,6 +1,6 @@
 
 # Script 3C ----------------------------------------------------------------
-# Analysis for Figure 4 
+# Analysis for Figure 5 
 
 # Cobamide Skin Microbiome Manuscript
 # Spiec-Easi - Oh 2016 samples

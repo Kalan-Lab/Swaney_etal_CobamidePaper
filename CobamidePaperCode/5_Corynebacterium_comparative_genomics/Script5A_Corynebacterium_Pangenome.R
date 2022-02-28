@@ -1,6 +1,6 @@
 
 # Script 5A ----------------------------------------------------------------
-# Figure 6B-E and Supplemental Figure 12
+# Figure 7A-D and Supplemental Figure 6
 
 # Cobamide Skin Microbiome Manuscript
 # Corynebacterium pangenome analysis
@@ -21,7 +21,7 @@ setwd("/Users/mhswaney/GitHub/scripts/mhswaney/cobamide_paper/CobamidePaperCode/
 pangenome <- read.delim("5_Corynebacterium_comparative_genomics/data/Corynebacterium_Pangenome_Summary.txt")
 enrich <- read.delim("5_Corynebacterium_comparative_genomics/data/Corynebacterium_Enriched_Functions.txt")
 
-# Figure 6B-E plotting -------------------------------------------------------
+# Figure 7A-D plotting -------------------------------------------------------
 
 ### Box plot of the total number of gene glusters in each genome
 p2 <- ggplot(pangenome, aes(x=Ecosystem, y=num_gene_clusters, fill = Ecosystem)) + 
@@ -114,7 +114,7 @@ top <- plot_grid(p1,p2, rel_widths = c(1,1.02))
 plot_grid(top,p3, p4,nrow=3, rel_heights = c(0.7,1,1.2))
 
 
-# Supplemental Figure 12 plotting ------------------------------------------
+# Supplemental Figure 6 plotting ------------------------------------------
 
 Strain <- lapply(pangenome$Strain,FUN=function(X){str_replace(X,"strain","")}) # remove 'strain' string from strain names
 Strain <- t(data.frame(Strain))
@@ -123,7 +123,7 @@ pangenome$Strain <- as.vector(Strain)
 # relabel C. matruchotii with correct strain ID
 pangenome[pangenome$Strain == "Corynebacterium_matruchotii",][,"Strain"] <- "Corynebacterium_matruchotii_NCTC10206"
 
-# plot dot plot - number of singleton gene clusters per genome - Supplemental Figure 12A
+# plot dot plot - number of singleton gene clusters per genome - Supplemental Figure 6A
 ggplot(pangenome, aes(x=reorder(Strain, singleton_gene_clusters),y=singleton_gene_clusters, color=Ecosystem)) + 
   geom_point(size=3) + 
   geom_segment(aes(x=Strain, 
@@ -140,7 +140,7 @@ ggplot(pangenome, aes(x=reorder(Strain, singleton_gene_clusters),y=singleton_gen
   theme_classic(base_size = 9) + 
   labs(color="Ecosystem")
 
-# plot box plot - number of singleton gene clusters per genome - Supplemental Figure 12B
+# plot box plot - number of singleton gene clusters per genome - Supplemental Figure 6B
 ggplot(pangenome, aes(x=Ecosystem, y=singleton_gene_clusters, fill=Ecosystem)) + 
   geom_boxplot()+
   theme_classic() + 

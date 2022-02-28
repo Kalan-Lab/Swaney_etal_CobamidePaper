@@ -1,6 +1,6 @@
 
 # Script 4 ----------------------------------------------------------------
-# Figure 5A, Supplemental Figures 7-9, Supplemental Tables 3-4
+# Figure 6A, Supplemental Figure 4, Supplemental Material S9
 
 # Cobamide Skin Microbiome Manuscript
 # Healthy skin microbiome abundance analysis
@@ -279,13 +279,13 @@ plot_NMDS <- function(site, meta, abundance_long, abundance_table, diversity, ta
 # diversity = diversity metrics computed on batch-adjusted counts table
 
 # Corynebacterium abundances
-# Data for Supplemental Table 3
+# Data for Supplemental Material S9
 sebaceous_plot_Co <- plot_NMDS("sebaceous",metadata, gathered, batch_adjusted_relabund, diversity, taxa = "Corynebacterium")
 moist_plot_Co <- plot_NMDS("moist",metadata, gathered, batch_adjusted_relabund, diversity, taxa = "Corynebacterium")
 dry_plot_Co <- plot_NMDS("dry",metadata, gathered, batch_adjusted_relabund, diversity, taxa = "Corynebacterium")
 foot_plot_Co <- plot_NMDS("foot",metadata, gathered, batch_adjusted_relabund, diversity, taxa = "Corynebacterium")
 
-# final plot - Figure 5A
+# final plot - Figure 6A
 plot_grid(sebaceous_plot_Co, moist_plot_Co, dry_plot_Co, foot_plot_Co, nrow=2)
 
 # Cutibacterium abundances
@@ -294,7 +294,7 @@ moist_plot_Cu <- plot_NMDS("moist",metadata, gathered, batch_adjusted_relabund, 
 dry_plot_Cu <- plot_NMDS("dry",metadata, gathered, batch_adjusted_relabund, diversity, taxa = "Cutibacterium")
 foot_plot_Cu <- plot_NMDS("foot",metadata, gathered, batch_adjusted_relabund, diversity, taxa = "Cutibacterium")
 
-# final plot - Cutibacterium - Supplemental Figure 7
+# final plot - Cutibacterium - Supplemental Figure 4A
 plot_grid(sebaceous_plot_Cu, moist_plot_Cu, dry_plot_Cu, foot_plot_Cu, nrow=2)
 
 # High vs low CPC abundance analysis --------------------------------------
@@ -358,11 +358,15 @@ data <- data %>% separate(Species, into=c("Domain","Phylum","Class","Order","Fam
 
 # assign taxa under 10% abundance as "Other"
 data$name_other <- ifelse(data$Abundance <= 0.1, "Other", as.character(data$Species))
+# reassign any taxa grouped into "Other" (due to <10% abundance in a sample) to it's species name if it is >10% in at least 1 other sample
+data <- data %>% group_by(Species) %>% mutate(Plot_name = case_when(
+  any(name_other != "Other") ~ as.character(Species), 
+  any(name_other == "Other") ~ name_other))
 
 # add all "Other" abundances together
-dat_plot <- data %>% group_by(SampleID, name_other, Group) %>% summarise(Abundance = sum(Abundance))
+dat_plot <- data %>% group_by(SampleID, Plot_name, Group) %>% summarise(Abundance = sum(Abundance))
 
-mhs45rainbow = c("#771155", "#AA4488", "#CC99BB", "#e6c5e0","#fae6f8",
+mhs45rainbow = c("grey45", "#771155", "#AA4488", "#CC99BB", "#e6c5e0","#fae6f8",
                  "#114477", "#4477AA", "#77AADD", "#b9cfeb","#e6ebfa",
                  "#117777", "#44AAAA", "#77CCCC", "#bae6e0","#e1f4f5",
                  "#117744", "#44AA77", "#88CCAA", "#bce3d0","#dff2e5",
@@ -370,12 +374,17 @@ mhs45rainbow = c("#771155", "#AA4488", "#CC99BB", "#e6c5e0","#fae6f8",
                  "#774411", "#AA7744", "#DDAA77", "#edc99f","#f7e1c8",
                  "#771122", "#AA4455", "#DD7788", "#e8aeae","#f7dada",
                  "#4c285c","#9167a3","#d0a3e3","#dac2ed","#ebdff5",
-                 "#636363","#8f8f8f","#c9c9c9","#e3e3e3","#f0f0f0")
+                 "#636363","#8f8f8f","#c9c9c9","#e3e3e3")
 
 dat_plot$Group <- factor(dat_plot$Group, levels=c("Low","High"))
 
-# plot - Supplemental Figure 9
-ggplot(dat_plot, aes(x=SampleID, y=Abundance*100,fill=name_other)) + geom_col() +
+# re-order species factor levels
+species <- unique(dat_plot$Plot_name)
+species_order <- species[c(27,1:26,28:41)]
+dat_plot$Plot_name <- factor(dat_plot$Plot_name, levels = species_order)
+
+# plot - Supplemental Figure 4C
+ggplot(dat_plot, aes(x=SampleID, y=Abundance*100,fill=Plot_name)) + geom_col() +
   theme_classic() + 
   facet_wrap(~Group, scales = "free_x") + 
   theme(axis.text.x = element_blank()) + ylab("Relative abundance") + 
@@ -480,7 +489,7 @@ corr <- function(site, meta, abundance_long, diversity, taxa){
 }
 
 # Calculate correlation between non-B12 producing Corynebacteria and Shannon Diversity
-# Data for Supplemental Table 4
+# Data for Supplemental Material S9
 sebaceous_corr <- corr("sebaceous",metadata, gathered, diversity, taxa = "Corynebacterium_non")
 moist_corr <- corr("moist",metadata, gathered, diversity, taxa = "Corynebacterium_non")
 dry_corr <- corr("dry",metadata, gathered, diversity, taxa = "Corynebacterium_non")
@@ -569,7 +578,7 @@ nonB12 <- nonB12 %>% filter(!is.infinite(log10nonabundance)) # exclude a few sam
 
 all <- left_join(B12,nonB12[,c(1,16)])
 
-# Supplemental Figure 8
+# Supplemental Figure 4B
 ggplot(all,aes(x=log10abundance, y=log10nonabundance)) + geom_point() + facet_wrap(~microenvironment,scales="free") + theme_classic() +
   stat_cor(method = "spearman", label.x = -0.5, label.y = -1.5) + ylab("Log10 Corynebacterium non-producer abundance") + 
   xlab("Log10 Corynebacterium producer abundance")

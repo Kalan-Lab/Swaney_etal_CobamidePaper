@@ -1,6 +1,6 @@
 
 # Script 3D ----------------------------------------------------------------
-# Analysis for Figure 4 
+# Analysis for Figure 5 
 
 # Cobamide Skin Microbiome Manuscript
 # Spiec-Easi - Hannigan 2015 samples

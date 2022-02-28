@@ -1,6 +1,6 @@
 
 # Script 3B ----------------------------------------------------------------
-# Analysis for Figure 4 
+# Analysis for Figure 5 
 
 # Cobamide Skin Microbiome Manuscript
 # Spiec-Easi - LKMB002 samples

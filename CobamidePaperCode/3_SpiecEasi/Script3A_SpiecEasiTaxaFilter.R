@@ -1,6 +1,6 @@
 
 # Script 3A ----------------------------------------------------------------
-# Analysis for Figure 4
+# Analysis for Figure 5
 
 # Cobamide Skin Microbiome Manuscript
 # Spiec-Easi Taxa Filter

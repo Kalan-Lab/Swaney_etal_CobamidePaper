@@ -1,6 +1,6 @@
 
 # Script 5B ----------------------------------------------------------------
-# Figure 6A
+# Figure 7E
 
 # Cobamide Skin Microbiome Manuscript
 # Corynebacterium phylogeny 
@@ -124,7 +124,7 @@ genomeLength <- as.data.frame(genomeLength)
 
 p4 <- p3 + new_scale_fill()
 
-# plot final tree - Figure 6A
+# plot final tree - Figure 7E
 final <- gheatmap(p4, genomeLength, 
                   width = 0.05, offset=0.55, color = "black", 
                   high= "#203f87",low="white",
