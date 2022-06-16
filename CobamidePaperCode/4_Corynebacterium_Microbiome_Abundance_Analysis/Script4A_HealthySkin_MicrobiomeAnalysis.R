@@ -1,5 +1,5 @@
 
-# Script 4 ----------------------------------------------------------------
+# Script 4
 # Figure 6A, Supplemental Figure 4, Supplemental Material S9
 
 # Cobamide Skin Microbiome Manuscript
@@ -252,19 +252,20 @@ plot_NMDS <- function(site, meta, abundance_long, abundance_table, diversity, ta
                        method = "bray")
   set.seed(100)
   # NMDS using Vegan package
-  mds <- metaMDS(beta_dist, k=2, trymax=100)
+  mds <- metaMDS(beta_dist, k=4, trymax=100)
   mds_data <- as.data.frame(mds$points)
   mds_data$SampleID <- rownames(mds_data)
   mds_data <- dplyr::left_join(B12,mds_data)
   
   # plot NMDS
-  plot <- ggplot(mds_data, aes(x=MDS1, y=MDS2, color=log10abundance,size=Shannon)) + geom_point() +
-    labs(color = paste0("Log10 ", taxa,"\ncobamide producer abundance")) +
+  plot <- ggplot(mds_data, aes(x=MDS1, y=MDS2, color=log10abundance,size=Shannon)) + geom_point(alpha=0.7) +
+    labs(color = paste0("Log10 ", taxa,"\ncobamide producer\nabundance")) +
     theme_classic() +
     ggtitle(site) +
     scale_color_gradient(low="blue",high="orange") +
     guides(color = "colorbar", size= "legend") +
-    scale_size(range=c(1,7))
+    scale_size(range=c(1,7)) +
+    theme(legend.title = element_text(face="bold"))
   
   print(cor.test(mds_data$log10abundance,mds_data$Shannon,method="spearman", exact=FALSE))
   
